@@ -1,21 +1,39 @@
 <?php
 
-require_once 'Model.php';
+require_once 'ModelPDO.php';
 
-class Blendoku{
+class Blendoku extends ModelPDO{
+
+    public function getLevels(){
+        $oDB = $this->getDBO();
+        $query = $oDB->query('SELECT COUNT(*) FROM partidas');
+        $queryResult = $query->fetch();
+      
+        return $queryResult;
+    }
+            
 
     public function getGame($partida){
-       
-        $colores = Model::getGame($partida);
-//        $colores="4444";
+      
+        $oDB = $this->getDBO();
+        $query = $oDB->query('SELECT colores FROM partidas WHERE id='.$partida);
+        $queryResult = $query->fetch();
+        
+        $colores= explode(",", $queryResult['colores']);
+        shuffle($colores);
         
         return $colores;
     }
+
     public function checkGame($partida,$colores){
+        $oDB = $this->getDBO();
+        $query = $oDB->query('SELECT colores FROM partidas WHERE id='.$partida);
+        $queryResult = $query->fetch();
         
-        $colores = Model::checkGame($partida);
-        
-        return 0;
+        $resultado= explode(",", $queryResult['colores']);
+       
+//        return in_array($colores ,$resultado);
+        return $colores===$resultado;
     }
     
     

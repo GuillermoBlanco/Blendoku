@@ -8,6 +8,12 @@
      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
      xmlns="http://schemas.xmlsoap.org/wsdl/">
  
+  <message name="getLevelsPeticion">
+  </message>
+  <message name="getLevelsRespuesta">
+      <part name="num_partida" type="xsd:int" />
+  </message>
+    
   <message name="getGamePeticion">
     <part name="num_partida" type="xsd:int" />
   </message>
@@ -22,10 +28,14 @@
   </message>
  
   <message name="checkGameRespuesta">
-    <part name="respuesta" type="xsd:int" />
+    <part name="respuesta" type="xsd:boolean" />
   </message>
  
   <portType name="GamePort">
+    <operation name="getLevels">
+      <input message="tns:getLevelsPeticion" />
+      <output message="tns:getLevelsRespuesta" />
+    </operation>
     <operation name="getGame">
       <input message="tns:getGamePeticion" />
       <output message="tns:getGameRespuesta" />
@@ -38,6 +48,17 @@
  
   <binding name="BlendokuBinding" type="tns:GamePort">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="getLevels">
+        <soap:operation soapAction="urn:Blendoku#getLevels" />
+        <input>
+          <soap:body use="encoded" namespace="urn:Blendoku"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        </input>
+        <output>
+          <soap:body use="encoded" namespace="urn:Blendoku"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        </output>
+    </operation>
     <operation name="getGame">
         <soap:operation soapAction="urn:Blendoku#getGame" />
         <input>

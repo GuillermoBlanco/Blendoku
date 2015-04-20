@@ -15,7 +15,7 @@ abstract class ModelPDO {
 	 * IP o nom de domini del servidor
 	 * @var string
 	 */
-	private $host = "127.0.0.1";
+	private $host = "localhost";
 	
 	/**
 	 * Nom de la base de dades
